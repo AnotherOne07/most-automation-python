@@ -5,6 +5,7 @@ Facilita a manutenção caso a interface do Portal de Transparência sofra alter
 
 class BuscaSelectors:
     """Seletores da página inicial e de resultados da busca."""
+    PERSON_BT_SEARCH = "#button-consulta-pessoa-fisica"
     INPUT_TERMO = "#termo"
     BTN_BUSCA_REFINADA = "button[aria-controls='box-busca-refinada']"
     BOX_BUSCA_REFINADA = "#box-busca-refinada"
