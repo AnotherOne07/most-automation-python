@@ -6,10 +6,9 @@ import os
 import json
 from datetime import datetime
 from playwright.async_api import async_playwright, Page, BrowserContext
-# from playwright_stealth import stealth_async
 
 # Importação do arquivo de seletores
-from selectors import BuscaSelectors, PanoramaSelectors, DetalhesSelectors
+from src.bot.selectors import BuscaSelectors, PanoramaSelectors, DetalhesSelectors
 
 class PortalTransferenciaBot:
     """
