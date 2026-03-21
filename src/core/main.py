@@ -1,14 +1,25 @@
-from fastapi import FastAPI, HTTPException
+import os
+import sys
+import asyncio
+from fastapi import FastAPI, HTTPException, Depends, Security
+from fastapi.security.api_key import APIKeyHeader
 from src.api.schemas import ConsultRequest, ConsultResponse
 from src.bot.web_bot import PortalTransferenciaBot
-import os, sys
-import asyncio
 from dotenv import load_dotenv
 
 load_dotenv()
 
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+
+API_KEY_NAME = "Api-Key"
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+
+async def get_api_key(api_key_header: str = Security(api_key_header)):
+    expected_key = os.getenv("API_SECRET_KEY")
+    if api_key_header != expected_key:
+        raise HTTPException(status_code=401, detail="Acesso Negado: API Key inválida ou ausente")
+    return api_key_header
 
 app = FastAPI(
     title="API para bot do Portal de Transparência",
@@ -17,7 +28,7 @@ app = FastAPI(
 )
 
 @app.post("/consultar", response_model=ConsultResponse)
-async def consultar_portal(request: ConsultRequest):
+async def consultar_portal(request: ConsultRequest, api_key: str = Depends(get_api_key)):
     bot = PortalTransferenciaBot(headless=True)
 
     try:
