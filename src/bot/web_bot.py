@@ -187,7 +187,7 @@ class PortalTransferenciaBot:
 
             # Aguarda até que o elemento dos resultados esteja visível na tela
             result_container = self.page.locator(BuscaSelectors.CONTAINER_RESULTADOS)
-            await result_container.wait_for(state="visible", timeout=45000)
+            await result_container.wait_for(state="visible", timeout=5000)
 
             # Fail verification: Verifica se algum resultado foi encontrado na busca
             if await self.page.locator(BuscaSelectors.MSG_SEM_RESULTADO).count() > 0:
