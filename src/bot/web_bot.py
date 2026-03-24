@@ -152,14 +152,6 @@ class PortalTransferenciaBot:
             print(f"[*] Preenchendo dados de busca: {cpf_nis if cpf_nis else nome}...")
             search_input = BuscaSelectors.INPUT_TERMO
             await self.page.fill(search_input, cpf_nis if cpf_nis else nome)
-            
-
-            # # Expandir accordion de busca refinada
-            # await self.page.locator(BuscaSelectors.BTN_BUSCA_REFINADA).click()
-            # # Aguarda o elemento estar disponível
-            # await self.page.locator(BuscaSelectors.BOX_BUSCA_REFINADA).wait_for(state="visible")
-            # # Marca filtro de beneficiario
-            # await self.page.locator(BuscaSelectors.CHECK_BENEFICIARIO).check()
 
             # Tratamento de interação com a interface para o caso de ser exibido o modal dos cookies
             try: 
@@ -187,7 +179,7 @@ class PortalTransferenciaBot:
 
             # Aguarda até que o elemento dos resultados esteja visível na tela
             result_container = self.page.locator(BuscaSelectors.CONTAINER_RESULTADOS)
-            await result_container.wait_for(state="visible", timeout=5000)
+            await result_container.wait_for(state="visible", timeout=30000)
 
             # Fail verification: Verifica se algum resultado foi encontrado na busca
             if await self.page.locator(BuscaSelectors.MSG_SEM_RESULTADO).count() > 0:
